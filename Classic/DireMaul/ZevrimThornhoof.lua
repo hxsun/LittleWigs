@@ -22,7 +22,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IntensePain", 22478)
-	self:Log("SPELL_CAST_SUCCESS", "Sacrifice", 22651)
+	self:Log("SPELL_CAST_START", "Sacrifice", 22651)
+	-- self:Log("SPELL_CAST_SUCCESS", "Sacrifice", 22651)
 	self:Log("SPELL_AURA_APPLIED", "SacrificeApplied", 22651)
 	self:Log("SPELL_CAST_START", "ShadowBoltVolley", 17228)
 	if self:Classic() and not self:Vanilla() then -- no encounter events in Cataclysm Classic
@@ -33,7 +34,7 @@ end
 
 function mod:OnEngage()
 	self:CDBar(22478, 3.7) -- Intense Pain
-	self:CDBar(22651, 7.1) -- Sacrifice
+	self:CDBar(22651, 6.1) -- Sacrifice
 	self:CDBar(17228, 8.3) -- Shadow Bolt Volley
 end
 
@@ -48,7 +49,9 @@ function mod:IntensePain(args)
 end
 
 function mod:Sacrifice(args)
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 17.0)
+    self:PlaySound(args.spellId, "alert")
 end
 
 function mod:SacrificeApplied(args)
